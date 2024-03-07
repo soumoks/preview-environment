@@ -1,0 +1,15 @@
+---
+# Source: mlflow/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: python-app
+  name: simple-app-service
+spec:
+  ports:
+    - port: 8088
+      targetPort: 8088
+      protocol: TCP
+  type: NodePort
+  selector:
+    app: simple-app
