@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.name }}-deployment
+  namespace: python-app
+  labels:
+    app: simple-app
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.name}}
+    spec:
+      containers:
+      - name: {{ .Values.image.name }}
+        image: "fastapi_app:{{ default .Chart.appVersion .Values.image.tag }}"
+        ports:
+        - containerPort: {{ .Values.service.port }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}

@@ -1,0 +1,13 @@
+replicaCount: 1
+name: simple-app
+env: dev
+namespace: python-app
+image:
+  name: fastapi_app
+  tag: 'a9f44751c23820745efef75e7a053b3ed8da6f8a'
+  pullPolicy: Never
+service:
+  type: LoadBalancer
+  port: 8088
+  targetPort: 8088
+  portName: http
