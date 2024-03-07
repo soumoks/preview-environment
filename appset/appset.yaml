@@ -9,9 +9,9 @@ spec:
       github:
         owner: soumoks
         repo: preview-environments
-        tokenRef:
-          secretName: repo-3066764709
-          key: password
+        # tokenRef:
+        #   secretName: repo-3066764709
+        #   key: password
         labels:
         - preview
       requeueAfterSeconds: 15
