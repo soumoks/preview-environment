@@ -1,5 +1,4 @@
 ---
-# Source: mlflow/templates/ns.yaml
 apiVersion: v1
 kind: Namespace
 metadata:

@@ -1,0 +1,43 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: preview-environments
+  namespace: argocd
+spec:
+  generators:
+  - pullRequest:
+      github:
+        owner: soumoks
+        repo: preview-environments
+        tokenRef:
+          secretName: repo-3066764709
+          key: password
+        labels:
+        - preview
+      requeueAfterSeconds: 15
+  template:      
+    metadata:
+      name: 'python-app-{{branch}}-{{number}}'
+    spec:
+      source:
+        repoURL: https://github.com/soumoks/preview-environment.git
+        targetRevision: '{{head_sha}}'
+        path: helm
+        helm:
+          parameters:
+          - name: "image.tag"
+            value: '{{head_sha}}'
+          - name: "namespace"
+            value: 'python-app-{{branch}}-{{number}}'
+      project: default
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true  
+        automated:
+          prune: true
+          selfHeal: true
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: 'python-app-{{branch}}-{{number}}'
+      
+      
